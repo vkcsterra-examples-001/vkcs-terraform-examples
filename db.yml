@@ -1,0 +1,21 @@
+---
+  - hosts: db
+    tasks:
+      - name: install soft
+        become: true
+        apt:
+          pkg:
+            - docker
+            - docker.io
+            - docker-compose
+          state: present
+          update_cache: true
+
+      - name: start docker
+        become: true
+        service:
+          name: docker
+          state: started
+          enabled: yes
+
+# cat application_data.sql | PGPASSWORD=P@ssw0rd psql -h 127.0.0.1 -U postgres
